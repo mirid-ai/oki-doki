@@ -1,0 +1,26 @@
+{
+  "name": "after-the-signal-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Capacitor wrapper for the After the Signal prototype",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "stage": "node tools/run_python.mjs tools/stage.py",
+    "icons": "node tools/run_python.mjs tools/icons.py",
+    "add:android": "npm run stage && cap add android && node tools/run_python.mjs tools/configure_native.py",
+    "add:ios": "npm run stage && cap add ios && node tools/run_python.mjs tools/configure_native.py",
+    "sync": "npm run stage && cap sync && node tools/run_python.mjs tools/configure_native.py",
+    "open:android": "cap open android",
+    "open:ios": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.6.0",
+    "@capacitor/core": "8.6.0",
+    "@capacitor/ios": "8.6.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.6.0"
+  }
+}

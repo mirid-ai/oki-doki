@@ -1,0 +1,8 @@
+{
+  "name": "oki-doki-desktop",
+  "productName": "Oki Doki",
+  "version": "0.1.0",
+  "description": "Oki Doki portable desktop prototype",
+  "main": "main.js",
+  "private": true
+}

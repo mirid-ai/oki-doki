@@ -1,0 +1,1 @@
+{"name":"after-signal-companion","version":"0.1.0","private":true,"type":"module","engines":{"node":">=24"},"scripts":{"test":"node --test test.mjs voice-gateway.test.mjs","start":"node gateway.mjs"}}

@@ -1,0 +1,13 @@
+Oki Doki — complete source
+
+Extract game-source.zip beside release/ and website/. It extracts as oki-doki/;
+rename that folder to game/ to recreate the layout expected by the build tools.
+The game README describes running and testing the source. Desktop launcher and
+build scripts are in release/desktop; website source is in website/.
+
+The pinned source and build instructions for the Kokoro eSpeak phonemizer are
+inside game-source.zip under assets/kokoro-local/source/. The local dialogue and
+transcription models and Electron, llama.cpp and Parakeet binaries have separate
+licenses and are not included. See release/desktop/LOCAL-AI.md for details.
+To rebuild this source bundle from the reconstructed tree, run
+python3 release/package_complete_source.py. This does not publish anything.

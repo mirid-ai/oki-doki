@@ -1,0 +1,30 @@
+Oki Doki standalone local inference runner: experimental Windows x64 build
+
+Source: https://github.com/ggml-org/llama.cpp/tree/b11852
+Commit: 7894e8b92481a8bb8ffe94f73b656ffe0dd01e10
+Source licence: MIT (LLAMA-MIT.txt). The only source change is the included
+mingw-header-compat.patch: skip a Windows power-throttling optimization when
+older MinGW headers do not provide the necessary definitions. This does not
+change the model or networking code. The application uses up to four threads.
+
+Build used Ubuntu noble's g++-mingw-w64-x86-64-posix and
+ gcc-mingw-w64-x86-64-posix 13.2.0-6ubuntu1+26.1,
+mingw-w64-x86-64-dev 11.0.1-3build1, cmake 3.28.3-1build7, and GNU make.
+Configuration from source, after applying mingw-header-compat.patch:
+
+cmake -S llama.cpp -B build -DCMAKE_SYSTEM_NAME=Windows \
+  -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc-posix \
+  -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++-posix \
+  -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DGGML_NATIVE=OFF \
+  -DGGML_OPENMP=OFF -DGGML_CPU_ALL_VARIANTS=OFF -DLLAMA_CURL=OFF \
+  -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=ON \
+  -DCMAKE_EXE_LINKER_FLAGS='-static -static-libgcc -static-libstdc++'
+cmake --build build --target llama-server -j 8
+
+SHA-256: 068e99429ee2e9d4a831145ce45b5edb4dc2fe170d6d0048ac8fa08a1610a68d
+Imported DLLs: ADVAPI32.dll, KERNEL32.dll, msvcrt.dll, SHELL32.dll, WS2_32.dll.
+These are Windows system DLLs; the compiler runtimes are statically linked.
+GCC runtime components and MinGW notices are included. See GPL-3.txt,
+GCC-RUNTIME-EXCEPTION.txt, GCC-PACKAGE-COPYRIGHT.txt, and MINGW-COPYRIGHT.txt.
+The test results, Windows execution status and distribution decisions must be
+reported separately; a cross-compile alone does not verify the executable.

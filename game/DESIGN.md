@@ -1,0 +1,49 @@
+# Oki Doki — design direction
+
+**The Last Ticket** is the current playable story in development. It takes place at Moonrabbit Arcade, where a group of friends have made a cushion fort and invented a prize hunt. What starts as a colourful team adventure becomes a psychological mystery as the group discovers that the arcade's account of events does not always match what they can see.
+
+The earlier community-radio episode, **After the Signal**, is retained in `src/story.js` as a previous prototype. [Environment sketches](ENVIRONMENTS.md) record the alternatives considered for the new direction.
+
+## The promise
+
+*Oki Doki* is an original, unofficial spiritual successor responding to its creator's recollection of Aviva Sofia ASMR asking the developers for a *Doki Doki Literature Club* sequel. The goal is to build on character connection, surprise and player discussion, using optional AI to make conversations respond to the player's words. The project is unaffiliated with Team Salvato and does not imply Aviva Sofia ASMR's involvement or endorsement.
+
+The Last Ticket begins with Niko, Mira, Ash and the plush moth Mallow. The player chooses who to spend time with and shares an activity with them before choosing whether to extend a playful invitation or keep the relationship focused on the team. They can invite a personal discussion or keep the first private conversation focused on their shared task, and choose what to share as the arcade changes. An accepted date invitation leads to a small shared activity immediately: an imaginary milkshake toast with Niko, folding paper stars with Mira, or a first turn around the landing with Ash. Each offers two responses. The companion answers for themselves; the display’s compatibility label does not decide their relationship. Before the descent, an optional service-stair detour offers a different discovery and a physical choice that can help a later search. Authored paths lead to four main outcomes, with callbacks to earlier choices. On resolved paths where a date invitation was accepted, the player can share a small character-specific moment or leave the plan open; retreat and team-only paths retain their own endings. The story and characters are original; the prototype remains a work in progress rather than a complete game.
+
+On current runs that have witnessed both comparisons, the player can search for the release and commit to rescuing Mira before the longer audit. That route brings the group together for a shorter screen-based disclosure before rejoining the rescue ending. The original investigation and its later ending choices remain available, and older or incomplete checkpoints keep their existing options.
+
+## Satirical opening and the creator's other work
+
+The opening presents a falsely cheerful agreement and places the Agree button under the player's first pointer click. The service then treats that interaction as proof of its own claims, and the story follows how its reports and apparent independent checks repeat the same original assertion. Refusal can remain visibly refusal while the service counts it as engagement; a green acknowledgement can coexist with a door that remains closed.
+
+This direction draws on the creator's [*The Whole Thing*](https://boxil.ai/news/open-apology-to-anthropic/) and the institutional satire of Nepravda and ShitScience: circular records become evidence of themselves, while practical actions and relationships still matter. At the audit, the player can cover the lens, annotate the physical receipt, unplug the printer, or leave them alone. Each has a visible callback; the annotation can be written in the player’s own words, covering the lens changes how Mallow can help, and an unplugged printer must be reconnected deliberately before it can print a new record. The annotation is kept with the local checkpoint and is not included in model context. These are local physical consequences rather than a fix for the entire system. The characters need not agree on one explanation for every strange event. The opening interaction is fictional and does not store consent or configure tracking; real service configuration remains separate.
+
+## Design pillars
+
+1. **People before mystery.** Make the group fun to spend time with and give each person a distinct role and concern.
+2. **Player expression.** Let the player write and speak where it matters, while preserving authored alternatives.
+3. **Consequences that can be seen.** Make choices affect relationships, discovered evidence or the outcome.
+4. **A changing sense of reality.** Let familiar places and assurances become unreliable gradually, using presentation and sound alongside the writing.
+5. **A shared revelation, different paths.** Bring companions and discoveries together without making earlier choices meaningless.
+6. **Accessible and open.** Keep the authored story playable without an AI service, document provenance and make the project inspectable.
+
+## AI, voice and feedback
+
+The chosen companion and Mallow can offer optional generated replies and player-initiated follow-ups through a configured compatible service. An optional later group conversation lets the player ask Mallow another question, with separate bounded history from the earlier conversations. The game uses bounded conversation context; the shared conversation and the private conversation are kept separate, with the player's choice governing whether the last submitted private message is shared. The main story, branching and outcomes remain authored, and a written response is available when generation is unavailable or declined. The player’s follow-up question with a companion, including the task-focused conversation, can change how the group handles the latch on one rescue path. The latest submitted public message and Mallow’s last completed public reply are carried into the later record, where two reports cite each other as if they were independent. In the Mallow rescue, a previously witnessed spring, sewing string or doorstop can be used at the catch; the player can instead use the souvenir or hold the catch by hand. The player can use either printed line in a physical action, without the game guessing what the words mean. The player can revise the initial group message or a follow-up before continuing; private words remain separate unless the player chooses to share them. Free-form text does not automatically select the follow-up topic.
+
+Two in-story choices let the player compare complete messages. A small pairwise reward model fits those selections and a KL-regularized two-style policy selects a later written response and steers optional generated dialogue. For new runs, the first completed comparison also shapes Mallow’s first written greeting, which the later reveal can recall if it was seen. New runs also use witnessed comparisons to condition generated companion dialogue during the early private and shared-card conversations; a skipped comparison contributes no preference, and tied or entirely skipped comparisons add no style instruction. The requested style is sent separately from the bounded scene, and an external model may not follow it. When the later selection is clear, the screen shows the unselected authored opening while Mallow speaks the selected line. This policy does not train or update a connected language model's weights. Older checkpoints without the new witness markers retain the previous companion behaviour. Read-aloud uses bundled Kokoro recordings and, for unmatched text on supported devices, a bundled local Kokoro speech model; explicitly configured speech services can also be used. The Windows and Linux desktop downloads include optional local transcription and a local dialogue model. Browser-only play requires a separately configured service for transcription or generated dialogue.
+
+### Context outside the story
+
+People using an AI application do not necessarily see all of the system or developer instructions shaping its responses. For example, [OpenAI's model specification](https://model-spec.openai.com/2025-10-27#definitions) describes how an end user may see only selected conversation messages and may not know about system or developer messages. Visibility varies by product. The instructions sent by this open-source game can be inspected in `src/ai.js`; a configured provider may apply its own additional instructions.
+
+System instructions and preference training are distinct mechanisms. In one documented [reinforcement-learning-from-human-feedback approach](https://openai.com/index/learning-to-summarize-with-human-feedback/), people compare outputs, a reward model learns from those comparisons, and reinforcement learning updates the language model. The game's reward model and optimized two-style policy are a small dramatic analogy: the policy chooses between authored styles, and the connected language model is not retrained. The visibility of system instructions is background to the project, not a surprise to insert into the story's reveal.
+
+The optional **Wrench & Bandage Field Repair** kit includes a name-based free claim; players can also continue without it. The intended paid price is the lowest applicable app-store tier. Experimental native billing bridges are disabled by default and still require platform builds and store testing; see [MICROTRANSACTION.md](MICROTRANSACTION.md).
+
+## Next milestones
+
+- Playtest the new setting, character routes, pacing and outcomes, then revise from player feedback.
+- Expand character expressions, locations, music and sound with clear provenance.
+- Evaluate generated dialogue for character consistency and responsiveness with real compatible providers.
+- Test browser, keyboard, voice and mobile behavior on target devices; Android opening, save and picture touches have passed on a software emulator, while physical devices and an iOS build remain unverified.

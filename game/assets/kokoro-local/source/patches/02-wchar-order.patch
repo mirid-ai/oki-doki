@@ -1,0 +1,11 @@
+--- a/src/include/compat/wctype.h
++++ b/src/include/compat/wctype.h
+@@ -16,6 +16,8 @@
+  * along with this program; if not, see: <http://www.gnu.org/licenses/>.
+  */
+ 
++#include <wchar.h>
++
+ #ifndef WCTYPE_H_COMPAT_SHIM
+ #define WCTYPE_H_COMPAT_SHIM
+ 

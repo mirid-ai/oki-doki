@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Oki Doki</string>
+    <string name="title_activity_main">Oki Doki</string>
+    <string name="package_name">com.aftersignal.prototype</string>
+    <string name="custom_url_scheme">com.aftersignal.prototype</string>
+</resources>

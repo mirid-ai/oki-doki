@@ -1,0 +1,14 @@
+{
+  "appId": "com.aftersignal.prototype",
+  "appName": "Oki Doki",
+  "webDir": "www",
+  "server": {
+    "hostname": "localhost",
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "native"
+    }
+  }
+}

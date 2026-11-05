@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Configure a non-consumable Play product and its Play licensing public
+         key before release. Leave these blank until the product exists. -->
+    <string name="repair_kit_product_id" translatable="false"></string>
+    <string name="repair_kit_play_public_key" translatable="false"></string>
+    <!-- Set true only after the Play Console product uses the lowest paid tier. -->
+    <bool name="repair_kit_lowest_tier_confirmed">false</bool>
+</resources>
