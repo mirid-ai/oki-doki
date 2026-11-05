@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="245" viewBox="0 0 360 245">
+<rect width="360" height="245" rx="8" fill="#efe2cf"/>
+<path d="M9 11L351 8 347 236 11 234Z" fill="#f9f0df" stroke="#aa7f83" stroke-width="2"/>
+<path d="M16 18L344 15 341 229 19 227Z" fill="none" stroke="#d6b5a7" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+<path d="M43 38l85-8 97 7 93-8-5 174-91 8-94-7-88 8z" fill="#f4e5ce" stroke="#866875" stroke-width="3"/>
+<path d="M128 30l-1 174m98-167-3 174" fill="none" stroke="#c8ad9f" stroke-width="2"/>
+<path d="M62 145q50-28 87-13t70-27 74 4" fill="none" stroke="#b58d93" stroke-width="3" stroke-dasharray="6 5"/>
+<ellipse cx="179" cy="132" rx="77" ry="48" fill="#e7d2be" stroke="#a97d82" stroke-width="2"/>
+<g fill="#fff7e8" stroke="#694a59" stroke-width="2.5"><path d="M117 106h30v16q-3 11-15 11t-15-11zM121 107v-1m26 4q11 0 8 9t-8 4"/><path d="M177 100h30v16q-3 11-15 11t-15-11zm30 4q11 0 8 9t-8 4"/><path d="M138 151h30v16q-3 11-15 11t-15-11zm30 4q11 0 8 9t-8 4"/><path d="M204 146h30v16q-3 11-15 11t-15-11zm30 4q11 0 8 9t-8 4"/></g>
+<g fill="none" stroke="#b5888d" stroke-width="2" stroke-linecap="round"><path d="M126 99q-5-6 0-13m10 13q-5-6 0-13M186 93q-5-6 0-13m10 13q-5-6 0-13M147 144q-5-6 0-13m10 13q-5-6 0-13M213 139q-5-6 0-13m10 13q-5-6 0-13"/></g>
+<path d="M23 23l8-3m297 4 7 3M24 220l7 3m298-2 8-2" stroke="#d6b5a7" stroke-linecap="round"/>
+</svg>

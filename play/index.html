@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#141421">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Oki Doki">
+  <title>Oki Doki — The Last Ticket</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./assets/mallow-icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="./assets/mallow-apple-touch.png">
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+  <section id="startup-error" class="startup-error" role="alert" hidden>
+    <div>
+      <h1>Oki Doki could not start.</h1>
+      <p>Close and reopen the app, or reload this page. If it still does not start, update your browser or Android System WebView and try again.</p>
+    </div>
+  </section>
+  <section class="consent-opening" id="consent-opening" role="dialog" aria-modal="true" aria-labelledby="consent-title" aria-describedby="consent-copy">
+    <div class="consent-card">
+      <p class="consent-eyebrow">WELCOME TO OKI DOKI <span aria-hidden="true">✿</span></p>
+      <h1 id="consent-title">A lovely place to begin.</h1>
+      <div id="consent-copy">
+        <p>Dating is fun, internet simulations are safe and happy and healthy.</p>
+        <p>Data tracking is ethical and cookies are a great idea.</p>
+        <p>Click here if you agree and to continue.</p>
+      </div>
+      <button class="consent-agree" id="consent-agree" type="button">I agree <span aria-hidden="true">♥</span></button>
+    </div>
+  </section>
+  <div class="app" id="app" hidden>
+    <header class="topbar">
+      <div class="station"><span class="station-mark" aria-hidden="true">◉</span><span>OKI DOKI <small>THE LAST TICKET</small></span></div>
+      <div class="top-actions"><button class="text-button" id="sound-toggle" type="button" aria-pressed="false">Sound off</button><button class="text-button" id="save" type="button" title="Save story choices and submitted messages on this device" hidden>Save</button><button class="text-button" id="resume-game" type="button" title="Return to your saved story" hidden>Resume</button><button class="text-button" id="update-app" type="button" title="Reload into the new version; save your story first" hidden>Update available</button><button class="text-button" id="settings-open" type="button">AI settings</button><button class="text-button" id="restart" type="button">Restart</button></div>
+    </header>
+    <section class="resume-prompt" id="resume-prompt" aria-labelledby="resume-prompt-text" hidden>
+      <p id="resume-prompt-text">Resume your saved story? Progress since that save, including an unsent message, will be lost.</p>
+      <div class="resume-prompt-actions"><button class="secondary" id="resume-confirm" type="button">Resume saved story</button><button class="text-button" id="resume-cancel" type="button">Keep playing</button></div>
+    </section>
+    <main class="stage" id="stage">
+      <div class="backdrop" aria-hidden="true"></div>
+      <div class="shade" aria-hidden="true"></div>
+      <section class="intro" id="intro" aria-labelledby="intro-title">
+        <p class="eyebrow"><span class="live-dot"></span> THE LAST TICKET · A NIGHT WITH THE CREW</p>
+        <h1 id="intro-title">Oki<br><em>Doki</em></h1>
+        <p class="intro-copy">A rainy night, an arcade full of friends, and one last prize to win. The rules are simple. At least, they were.</p>
+        <button class="primary" id="start" type="button">Join the crew <span aria-hidden="true">↗</span></button>
+        <div class="resume-actions"><button class="secondary" id="resume" type="button" hidden>Resume saved story</button><button class="text-button" id="delete-save" type="button" hidden>Delete saved story</button></div>
+        <p class="save-note">Saving is optional and stores your choices and submitted messages on this device.</p>
+        <p class="content-note">A short psychological mystery. Contains themes of loss and unsettling audio descriptions.</p>
+      </section>
+      <section class="play" id="play" hidden aria-label="Story">
+        <div class="scene-top"><span class="on-air"><span class="live-dot" aria-hidden="true"></span><span role="status" aria-live="polite" aria-atomic="true"><span class="visually-hidden">Location: </span><span id="location-label">TEAM HQ</span></span></span><span class="scene-info"><span class="scene-label">THE LAST TICKET <span> / </span> 01</span><span id="machine-report" class="machine-report" role="status" aria-live="polite" aria-atomic="true" hidden></span></span></div>
+        <img class="portrait" id="portrait" alt="" aria-hidden="true" hidden>
+        <div class="dialogue" aria-live="polite" aria-atomic="false">
+          <p id="machine-report-mobile" class="machine-report machine-report-mobile" aria-hidden="true" hidden></p>
+          <p class="speaker" id="speaker" tabindex="-1" aria-describedby="keyboard-hint"></p>
+          <span id="keyboard-hint" class="visually-hidden">When Continue is available, press Enter or Space to advance the story.</span>
+          <p class="story-text" id="story-text"></p>
+          <figure class="souvenir-card" id="souvenir-card" hidden><img class="souvenir-art" id="souvenir-art" alt="" hidden><figcaption id="souvenir-caption" aria-hidden="true" hidden>PERFECT MOMENT</figcaption></figure>
+          <div class="interaction" id="interaction"></div>
+          <div class="dialogue-foot"><span id="status">A STORY IN PROGRESS</span><button class="advance" id="speak" type="button">Read aloud</button><button class="advance" id="auto-read" type="button" aria-pressed="true" aria-label="Automatically read story passages and choices aloud">Auto-read on</button><button class="advance" id="auto-advance" type="button" aria-pressed="false" aria-label="Automatically continue after spoken passages">Auto-advance off</button><button class="advance" id="play-ready" type="button" hidden>Play ready audio</button><button class="advance" id="stop-voice" type="button">Stop audio</button><button class="advance" id="advance" type="button">Continue <span aria-hidden="true">→</span></button></div>
+          <details class="story-history" id="story-history" aria-live="off"><summary>Recent story</summary><ol id="story-history-list" tabindex="0" aria-label="Recent story passages"></ol></details>
+        </div>
+      </section>
+    </main>
+    <footer class="footer"><span id="save-status" role="status" aria-live="polite">AN INDEPENDENT OPEN-SOURCE PROTOTYPE</span><span>A PLAYABLE STORY <span class="footer-star">✳</span></span></footer>
+  </div>
+  <dialog id="settings-dialog" aria-labelledby="settings-title" hidden>
+    <form id="settings-form" method="dialog">
+      <div class="modal-head"><div><p class="eyebrow">OPTIONAL · EXPERIMENTAL</p><h2 id="settings-title">AI settings</h2></div><button type="button" id="settings-close" class="icon-button" aria-label="Close settings">×</button></div>
+      <p>The story includes voices and is playable without an AI service. The desktop download includes an optional local character model and transcription. You can also connect Mirid or compatible services for dialogue and speech recognition.</p>
+      <section class="service-settings" id="desktop-quick-settings" aria-labelledby="desktop-quick-title" hidden>
+        <h3 id="desktop-quick-title">Use the included desktop AI</h3>
+        <p>The voices are already included. This sets up local character replies and microphone transcription; recording only starts when you choose it in the story. A custom speech service is kept.</p>
+        <button class="secondary" id="desktop-quick-start" type="button">Set up included AI and microphone</button>
+        <p class="privacy" id="desktop-quick-status" role="status" aria-live="polite">No account needed. Save the settings for this session after setup.</p>
+      </section>
+      <fieldset class="service-settings"><legend>Connect Mirid</legend><label for="mirid-url">Mirid backend URL</label><input id="mirid-url" type="url" value="http://127.0.0.1:8000" autocomplete="off"><div class="service-actions"><button class="secondary" id="mirid-preset" type="button">Use Mirid for text and speech</button><button class="secondary" id="mirid-check" type="button">Check available models</button><button class="secondary" id="local-launcher-preset" type="button">Use local launcher settings</button></div><p class="privacy" id="mirid-status" role="status" aria-live="polite">Checking lists advertised capabilities; it does not load a model or prove it is ready.</p></fieldset>
+      <details class="advanced service-settings"><summary>Connect a phone to desktop Mirid</summary>
+        <p>Start the companion on the computer, then enter its trusted HTTPS address and pairing token.</p>
+        <label for="companion-url">Companion HTTPS address</label><input id="companion-url" type="url" placeholder="https://your-computer.example:9443" autocomplete="off">
+        <label for="companion-token">Pairing token</label><input id="companion-token" type="password" autocomplete="off">
+        <button class="secondary" id="companion-preset" type="button">Use companion</button>
+        <p class="privacy" id="companion-status" role="status" aria-live="polite">The companion uses its configured transcription engine and voice service.</p>
+      </details>
+      <h3>Character dialogue</h3>
+      <details class="advanced"><summary>About AI instructions</summary><p>In many AI applications, users cannot see every system or developer instruction shaping a response; visibility depends on the service. Oki Doki’s instructions are in its open source. A connected provider may apply additional instructions of its own.</p></details>
+      <div class="service-settings"><button class="secondary" id="desktop-ai-start" type="button">Start included desktop AI</button><p class="privacy" id="desktop-ai-status" role="status" aria-live="polite">For the desktop package with its local AI files. Starting the model uses memory and may take a moment.</p></div>
+      <label for="endpoint">Chat completions URL</label><input id="endpoint" type="url" placeholder="http://localhost:1234/v1/chat/completions" autocomplete="off">
+      <label for="model">Model</label><input id="model" type="text" list="mirid-model-options" placeholder="Your model name" autocomplete="off"><datalist id="mirid-model-options"></datalist>
+      <label for="api-key">API key <span class="optional">optional for local servers</span></label><input id="api-key" type="password" autocomplete="off" placeholder="Only if your provider requires one">
+      <details class="advanced"><summary>Model compatibility</summary><label for="token-parameter">Output limit parameter</label><select id="token-parameter"><option value="max_tokens">max_tokens (most local models)</option><option value="max_completion_tokens">max_completion_tokens</option><option value="none">Do not send an output limit</option></select><p>Choose the parameter your provider supports.</p><label for="response-limit">Response token limit</label><select id="response-limit"><option value="100">100 (default)</option><option value="512">512</option><option value="2048">2,048</option><option value="8192">8,192</option></select><p>Ignored when no output limit is selected. Some models count hidden reasoning tokens toward this limit; larger limits can increase cost and wait time.</p><label for="model-temperature">Response variation</label><select id="model-temperature"><option value="0.8">Game setting (0.8)</option><option value="default">Provider default</option></select><p>Choose provider default if your model does not accept a custom temperature.</p><label for="chat-timeout">Time to wait for a dialogue response</label><select id="chat-timeout"><option value="15000">15 seconds</option><option value="30000">30 seconds</option><option value="60000" selected>1 minute</option><option value="120000">2 minutes</option></select><p>Slower local models may need more time. You can continue without waiting.</p></details>
+      <fieldset class="service-settings"><legend>Speech</legend>
+        <button class="secondary" id="desktop-asr-use" type="button">Use included desktop transcription</button>
+        <p class="privacy" id="desktop-asr-status" role="status" aria-live="polite">For microphone replies in the desktop package. Recording starts only when you choose it in the story.</p>
+        <div id="offline-voices-settings" class="service-settings" hidden>
+          <p>Keep voices on this browser for offline play (about 170 MiB). Each game update needs a new download.</p>
+          <button class="secondary" id="offline-voices-download" type="button">Download offline voices</button>
+          <button class="secondary" id="offline-voices-cancel" type="button" hidden>Cancel download</button>
+          <p class="privacy" id="offline-voices-status" role="status" aria-live="polite"></p>
+        </div>
+        <label for="tts-provider">Read-aloud provider</label><select id="tts-provider"><option value="standard">Use the speech service below</option><option value="realtime">OpenAI Realtime through companion (experimental)</option></select>
+        <label for="tts-prefetch">Speech preparation</label><select id="tts-prefetch"><option value="1">Standard: prepare one part ahead</option><option value="2">Faster: prepare two parts ahead</option></select>
+        <p class="privacy">Faster preparation can reduce pauses between voices, but may send an extra request that isn't played. Your provider may charge for it.</p>
+        <label for="realtime-url">Realtime companion HTTPS address</label><input id="realtime-url" type="url" autocomplete="off" placeholder="https://your-companion:9443">
+        <label for="realtime-token">Companion pairing token</label><input id="realtime-token" type="password" autocomplete="off">
+        <label for="realtime-voice">Narrator’s Realtime voice</label><input id="realtime-voice" value="marin" autocomplete="off">
+        <p class="privacy">Realtime read-aloud requests a short-lived token from your paired companion when you select Read aloud or use Auto-read. The companion must be explicitly configured for OpenAI; generation may incur provider charges. Voice input continues to use the speech service below.</p>
+        <label for="speech-mode">Speech service</label><select id="speech-mode"><option value="mirid">Mirid desktop</option><option value="mirid-local-kokoro">Mirid Linux single-voice speech (experimental)</option><option value="openai">OpenAI-compatible API</option></select>
+        <label for="speech-url">Speech service base URL</label><input id="speech-url" type="url" placeholder="http://127.0.0.1:8000" autocomplete="off">
+        <label for="tts-url">Read-aloud service URL <span class="optional">optional if different</span></label><input id="tts-url" type="url" autocomplete="off" placeholder="Leave blank to use the speech service URL">
+        <label for="tts-key">Read-aloud service key <span class="optional">if required for a different service</span></label><input id="tts-key" type="password" autocomplete="off">
+        <label for="tts-mode">Read-aloud service protocol</label><select id="tts-mode"><option value="">Same as speech service</option><option value="mirid">Mirid-compatible /tts</option><option value="mirid-local-kokoro">Mirid Linux fixed Kokoro (single voice)</option><option value="openai">OpenAI-compatible speech</option></select>
+        <label for="speech-key">Speech API key <span class="optional">if required</span></label><input id="speech-key" type="password" autocomplete="off">
+        <details class="advanced service-settings" id="creator-voice-tools" hidden><summary>Creator voice audition</summary>
+          <p>Audition your independently recorded reference for one speaker. This is a local session preview; it does not publish or change the voice for other players.</p>
+          <label for="chatterbox-engine">Chatterbox engine</label><select id="chatterbox-engine"><option value="chatterbox_nano">Chatterbox Nano</option><option value="chatterbox">Chatterbox (Faster)</option><option value="chatterbox_turbo">Chatterbox Turbo</option></select>
+          <label for="chatterbox-target">Speaker</label><select id="chatterbox-target"><option value="Narrator">Narrator (suggested)</option><option value="You">Player</option><option value="Service">Service</option><option value="Niko">Niko</option><option value="Mira">Mira</option><option value="Ash">Ash</option><option value="Mallow">Mallow</option></select>
+          <label for="chatterbox-url">Chatterbox service base URL</label><input id="chatterbox-url" type="url" autocomplete="off" placeholder="http://127.0.0.1:8000">
+          <label for="chatterbox-key">Chatterbox service key <span class="optional">if required</span></label><input id="chatterbox-key" type="password" autocomplete="off">
+          <label for="chatterbox-file">Reference recording</label><input id="chatterbox-file" type="file" accept=".wav,.mp3,.flac,.m4a,.aac,.mp4,.3gp,.ogg,.opus,.webm,audio/wav,audio/mpeg,audio/flac,audio/mp4,audio/aac,audio/3gpp,audio/ogg,audio/webm">
+          <p class="privacy">Uploading sends your selected recording to the Chatterbox service URL above, where the service stores it as a voice reference. Nothing is uploaded until you select the button. The selected engine must be available in that service; the fixed-voice Linux Kokoro mode cannot use a reference.</p>
+          <button class="secondary" id="chatterbox-upload" type="button">Upload and use this voice</button>
+          <label for="chatterbox-voice">Existing reference ID</label><input id="chatterbox-voice" type="text" autocomplete="off" placeholder="Reference filename or default">
+          <button class="secondary" id="chatterbox-use" type="button">Use this saved voice</button>
+          <button class="text-button" id="chatterbox-remove" type="button">Stop using the reference voice</button>
+          <p class="privacy" id="chatterbox-status" role="status" aria-live="polite">Select an engine and reference, then save the settings for this session.</p>
+        </details>
+        <label for="asr-engine">Mirid transcription engine</label><input id="asr-engine" value="whisper" autocomplete="off">
+        <label for="asr-model">API transcription model</label><input id="asr-model" value="whisper-1" autocomplete="off">
+        <p class="privacy">The experimental Linux voice normally uses Mirid’s fixed local voice and does not send the speech API key; the voice engine and voice fields below apply to the other services. A creator-assigned voice uses its own service.</p><label for="tts-engine">Mirid voice engine</label><input id="tts-engine" value="kokoro" autocomplete="off">
+        <label for="tts-model">API voice model</label><input id="tts-model" value="tts-1" autocomplete="off">
+        <p class="privacy">The default voices are Mirid Kokoro IDs. For an OpenAI-compatible service, enter a voice supported by your chosen provider in each field; OpenAI’s <code>tts-1</code>, for example, accepts <code>alloy</code>.</p>
+        <p class="privacy" id="publisher-voice-note" hidden></p>
+        <label for="narrator-voice">Narrator voice</label><input id="narrator-voice" value="af_heart" autocomplete="off">
+        <label for="you-voice">Player voice</label><input id="you-voice" value="af_sarah" autocomplete="off">
+        <label for="service-voice">Service voice</label><input id="service-voice" value="af_nicole" autocomplete="off">
+        <label for="niko-voice">Niko’s voice</label><input id="niko-voice" value="am_adam" autocomplete="off">
+        <label for="mira-voice">Mira’s voice</label><input id="mira-voice" value="af_bella" autocomplete="off">
+        <label for="ash-voice">Ash’s voice</label><input id="ash-voice" value="bm_george" autocomplete="off">
+        <label for="mallow-voice">Mallow’s voice</label><input id="mallow-voice" value="bf_emma" autocomplete="off">
+        <label for="voice-preview-speaker">Preview a speaker</label><select id="voice-preview-speaker"><option value="Narrator">Narrator</option><option value="You">Player</option><option value="Service">Service</option><option value="Niko">Niko</option><option value="Mira">Mira</option><option value="Ash">Ash</option><option value="Mallow">Mallow</option></select>
+        <p class="privacy">Preview uses the settings currently shown here. It may generate speech locally or send a short sample to your selected speech service. The experimental fixed Linux service uses one voice. Realtime assigns distinct voices to the other speakers.</p>
+        <button class="secondary" id="voice-preview" type="button">Preview voice</button>
+        <button class="secondary" id="voice-preview-ready" type="button" hidden>Play ready audio</button>
+        <button class="text-button" id="voice-preview-stop" type="button">Stop preview</button>
+        <p class="privacy" id="voice-preview-status" role="status" aria-live="polite"></p>
+      </fieldset>
+      <p class="privacy">Recording starts only when you select Record. Read aloud speaks one passage; Auto-read speaks each passage and its choices when shown until stopped. Speech can use included recordings or local generation; a configured speech service receives the text it speaks. Your audio, text and story context go to the services you configure. Later dialogue requests can include earlier private and group exchanges as context. Microphone permission is requested by your browser. Settings and keys stay in this page's memory and are cleared on reload or close.</p>
+      <div class="modal-actions"><button type="button" class="secondary" id="settings-clear">Clear</button><button class="primary" type="submit">Save for this session</button></div>
+    </form>
+  </dialog>
+  <script type="module" id="app-module" src="./src/app.js"></script>
+  <script src="./src/startup-watch.js"></script>
+  <script defer src="./src/register-sw.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "id": "./",
+  "name": "Oki Doki",
+  "short_name": "Oki Doki",
+  "description": "A psychological mystery about an arcade crew and one last prize.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#171a2a",
+  "theme_color": "#141421",
+  "icons": [
+    { "src": "./assets/mallow-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/mallow-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/mallow-icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

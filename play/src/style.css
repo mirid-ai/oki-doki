@@ -1,0 +1,270 @@
+:root { color-scheme: dark; font-family: 'DM Sans', system-ui, sans-serif; background:#0e1019; color:#f4eee5; font-synthesis:none; }
+* { box-sizing:border-box; }
+body { margin:0; }
+button,input,textarea,select { font:inherit; }
+button { cursor:pointer; }
+button:focus-visible, input:focus-visible, textarea:focus-visible { outline:2px solid #f7b98c; outline-offset:3px; }
+[hidden] { display:none !important; }
+.startup-error { position:fixed; top:0; right:0; bottom:0; left:0; inset:0; z-index:2000; display:grid; place-items:center; padding:24px; background:#171925; color:#f4eee5; }
+.startup-error div { max-width:570px; padding:28px; border:1px solid #ffffff30; border-radius:5px; background:#222330; }
+.startup-error h1 { margin:0 0 20px; font-size:clamp(30px,6vw,48px); line-height:1.1; }
+.startup-error p { margin:0; line-height:1.6; }
+.visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+.consent-opening { position:fixed; top:0; right:0; bottom:0; left:0; inset:0; z-index:1000; display:grid; place-items:center; overflow:auto; padding:24px; color:#453449; cursor:pointer; background:radial-gradient(circle at 18% 20%,#fff7d4 0,transparent 28%),radial-gradient(circle at 82% 80%,#d9e7ff 0,transparent 32%),#f7d9e5; }
+.consent-card { width:min(100%,570px); padding:clamp(26px,6vw,58px); border:1px solid #fff; border-radius:22px; background:#fffaf4eb; box-shadow:0 20px 70px #9e70933a; }
+.consent-eyebrow { margin:0; font-size:11px; font-weight:800; letter-spacing:.18em; color:#a45577; }
+.consent-card h1 { margin:24px 0; font-size:clamp(40px,7vw,68px); line-height:1.03; letter-spacing:-.035em; color:#62455e; }
+.consent-card p:not(.consent-eyebrow) { font-size:clamp(16px,2.3vw,19px); line-height:1.6; }
+.consent-agree { min-width:150px; min-height:48px; max-width:100%; margin-top:12px; border:0; border-radius:999px; padding:12px 25px; background:#b84b79; color:#fff; font-weight:800; box-shadow:0 5px 0 #87385c; }
+.consent-agree span { margin-left:8px; }
+.consent-agree.caught { position:fixed; z-index:1001; margin:0; }
+.consent-agree:focus-visible { outline:3px solid #4d3157; outline-offset:3px; }
+.app { min-height:100vh; display:flex; flex-direction:column; padding-left:env(safe-area-inset-left, 0px); padding-right:env(safe-area-inset-right, 0px); }
+.topbar { min-height:calc(76px + env(safe-area-inset-top, 0px)); display:flex; align-items:center; justify-content:space-between; padding:env(safe-area-inset-top, 0px) clamp(22px,5vw,80px) 0; background:#171925; border-bottom:1px solid #ffffff13; gap:20px; }
+.station { display:flex; gap:12px; align-items:center; font-size:12px; font-weight:700; letter-spacing:.14em; white-space:nowrap; }
+.station small { display:block; color:#a2a0a5; font-size:8px; letter-spacing:.18em; margin-top:4px; }
+.station-mark { color:#f0a17e; font-size:26px; line-height:1; }
+.top-actions { display:flex; gap:clamp(8px,3vw,30px); }
+.text-button { border:0; background:none; color:#ddd7d3; font-size:12px; padding:10px 2px; }
+.text-button:hover { color:#ffa982; }
+.resume-prompt { display:flex; flex-wrap:wrap; gap:12px 24px; align-items:center; justify-content:space-between; padding:12px clamp(22px,5vw,80px); background:#282633; border-bottom:1px solid #ffffff24; }
+.resume-prompt p { margin:0; max-width:620px; font-size:13px; line-height:1.5; }
+.resume-prompt-actions { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+.stage { position:relative; flex:1; min-height:580px; isolation:isolate; overflow:hidden; background:#292c3a; }
+.backdrop,.shade { position:absolute; top:0; right:0; bottom:0; left:0; inset:0; z-index:-2; }
+.backdrop { background:linear-gradient(145deg,#273544,#764b3d); background-image:url('../assets/arcade.png'); background-position:center; background-size:cover; }
+.stage[data-location="hideout"] .backdrop { background-image:url('../assets/hideout.png'); }
+/* A late, fleeting shadow is part of the fort artwork rather than a layer
+   above the interface. The mask confines the generated variant to the cloth. */
+.stage[data-shadow-echo="yes"] .backdrop::before {
+  content:""; position:absolute; top:0; right:0; bottom:0; left:0;
+  background-image:url('../assets/hideout-shadow.png'); background-position:inherit; background-size:cover;
+  display:none; opacity:1; pointer-events:none;
+  -webkit-mask-image:radial-gradient(ellipse 27% 43% at 25% 25%, #000 38%, transparent 92%);
+  mask-image:radial-gradient(ellipse 27% 43% at 25% 25%, #000 38%, transparent 92%);
+  animation:shadow-echo 1.5s 1s ease-in both;
+}
+@supports ((-webkit-mask-image:radial-gradient(#000, transparent)) or (mask-image:radial-gradient(#000, transparent))) {
+  .stage[data-shadow-echo="yes"] .backdrop::before { display:block; }
+}
+@keyframes shadow-echo { from { opacity:0; } to { opacity:1; } }
+@media (prefers-reduced-motion:reduce) {
+  .stage[data-shadow-echo="yes"] .backdrop::before { animation:none; opacity:1; }
+}
+.stage[data-location="sewing"] .backdrop { background-image:url('../assets/sewing-room.png'); }
+.stage[data-location="stairs"] .backdrop { background-image:url('../assets/stair-landing.png'); }
+.stage[data-location="playroom"] .backdrop { background-image:url('../assets/playroom.png'); }
+.stage[data-location="playroom"][data-playroom-light="dim"] .backdrop { background-image:url('../assets/playroom-dark.png'); }
+.shade { z-index:-1; background:linear-gradient(90deg,rgba(13,16,28,.89),rgba(13,16,28,.4) 57%,rgba(13,16,28,.18)),linear-gradient(0deg,rgba(13,16,28,.7),transparent 55%); }
+/* The arcade's familiar colours follow the story's phase, without motion or
+   changing the story's text. The rest of the scene stays easy to read. */
+.stage[data-mood="uneasy"] .backdrop { filter:saturate(.82) hue-rotate(-9deg); }
+.stage[data-mood="fracture"] .backdrop { filter:saturate(.68) contrast(1.08) hue-rotate(-15deg); }
+/* A pair of displaced strips makes the room itself seem slightly misaligned.
+   They are static, clipped to the backdrop, and never cover the dialogue. */
+.stage[data-mood="fracture"] .backdrop::before,
+.stage[data-mood="fracture"] .backdrop::after { content:""; position:absolute; top:0; right:0; bottom:0; left:0; inset:0; background-image:inherit; background-size:inherit; background-position:inherit; opacity:.75; pointer-events:none; }
+.stage[data-mood="fracture"] .backdrop::before { clip-path:inset(21% 0 74%); transform:translateX(9px); }
+.stage[data-mood="fracture"] .backdrop::after { clip-path:inset(60% 0 37%); transform:translateX(-7px); }
+.stage[data-mood="fracture"] .dialogue { border-color:#f0a4c87a; box-shadow:3px 0 #e780a348,-3px 0 #82d7df32,0 20px 80px #080a13aa; }
+.stage[data-mood="fracture"] .scene-label { text-shadow:2px 0 #e780a39c,-2px 0 #82d7df8c,0 1px 8px #000; }
+.intro { padding:clamp(70px,12vh,145px) clamp(25px,9vw,140px); max-width:800px; }
+.eyebrow { font-size:10px; font-weight:700; letter-spacing:.2em; color:#efad91; }
+.live-dot { display:inline-block; width:7px; height:7px; background:#ee806c; border-radius:50%; margin-right:8px; box-shadow:0 0 12px #f0785e; vertical-align:1px; }
+h1,h2 { font-family:'Playfair Display',Georgia,serif; }
+h1 { font-size:clamp(58px,8vw,112px); line-height:.91; letter-spacing:-.055em; margin:30px 0; }
+h1 em { color:#f2b497; font-weight:600; }
+.intro-copy { font-size:clamp(16px,1.6vw,19px); line-height:1.7; max-width:440px; color:#e0d9d2; margin-bottom:31px; }
+.primary { border:0; border-radius:3px; background:#edaa8c; color:#271c1b; padding:15px 21px; font-weight:700; font-size:13px; }
+.primary:hover { background:#ffc0a0; }
+.primary span { margin-left:27px; }
+.resume-actions { display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin-top:16px; }
+.resume-actions:not(:has(> :not([hidden]))) { display:none; }
+.save-note { max-width:400px; font-size:11px; color:#c4bdba; line-height:1.6; margin:18px 0 0; }
+.content-note { max-width:400px; font-size:11px; color:#c4bdba; line-height:1.6; margin-top:24px; }
+.play { position:relative; min-height:inherit; display:flex; flex-direction:column; justify-content:space-between; padding:32px clamp(22px,6vw,90px) clamp(32px,5vh,65px); }
+.scene-top { position:relative; z-index:1; display:flex; justify-content:space-between; align-items:center; font-size:10px; font-weight:700; letter-spacing:.16em; }
+.on-air { background:#1d1e27d9; padding:11px 13px; border:1px solid #ffffff24; border-radius:2px; }
+.scene-label { color:#e6e0d9; text-shadow:0 1px 8px #000; }
+.scene-label span { color:#efad91; }
+.scene-info { display:flex; flex-direction:column; align-items:flex-end; gap:8px; text-align:right; }
+.machine-report { max-width:190px; padding:7px 9px; background:#173d36e8; border:1px solid #a6e2bd99; border-radius:2px; color:#d4f6df; font-size:11px; line-height:1.4; letter-spacing:.08em; }
+.machine-report-mobile { display:none; }
+.portrait { position:absolute; right:clamp(3%, 9vw, 15%); bottom:0; height:min(84%, 670px); max-width:70%; object-fit:contain; object-position:bottom; pointer-events:none; filter:drop-shadow(0 12px 28px #090a15a8); }
+.dialogue { position:relative; z-index:1; align-self:center; width:min(100%,900px); background:rgba(20,21,32,.95); border:1px solid #f5d7c42b; padding:clamp(22px,3vw,35px); box-shadow:0 20px 80px #080a13aa; border-radius:4px; }
+/* On wide screens, leave space for the speaking character rather than
+   covering their expression with long passages or choice lists. */
+@media (min-width:901px) {
+  .portrait { right:3%; }
+  .portrait:not([hidden]) + .dialogue { align-self:flex-start; width:min(58%,760px); }
+}
+/* In the in-between widths, stack the portrait above the panel just as on a
+   phone; the full-width panel can grow naturally for longer choices. */
+@media (min-width:601px) and (max-width:900px) {
+  .portrait { top:60px; bottom:auto; right:4%; height:clamp(180px,30vh,240px); max-width:90%; }
+  .portrait:not([hidden]) + .dialogue { margin-top:clamp(180px,30vh,240px); }
+}
+.speaker { color:#f2ae8d; font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; margin:0 0 15px; }
+.story-text { overflow-wrap:anywhere; white-space:pre-wrap; font-family:Georgia,serif; font-size:clamp(18px,2vw,23px); line-height:1.55; margin:0; min-height:56px; }
+.souvenir-card:not([hidden]) { display:block; width:min(100%, 288px); margin:16px 0 0; border-radius:5px; background:#efe2cf; box-shadow:0 5px 18px #090a1570; overflow:hidden; }
+.souvenir-art:not([hidden]) { display:block; width:100%; height:auto; max-height:196px; object-fit:contain; }
+.souvenir-card figcaption:not([hidden]) { padding:0 8px 9px; text-align:center; font:700 11px Georgia,serif; letter-spacing:.1em; color:#684652; }
+.dialogue-foot { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:15px; margin-top:22px; border-top:1px solid #ffffff1a; padding-top:16px; }
+.dialogue-foot #status { font-size:9px; color:#a9a3a2; letter-spacing:.14em; }
+.story-history { margin-top:16px; color:#d4ceca; font-size:13px; }
+.story-history summary { cursor:pointer; color:#efb296; font-weight:700; padding:8px 0; }
+.story-history ol { max-height:35vh; overflow-y:auto; margin:8px 0 0; padding:0 0 0 24px; line-height:1.55; }
+.story-history ol:focus { outline:2px solid #f7b98c; outline-offset:3px; }
+.story-history li { margin:8px 0; overflow-wrap:anywhere; white-space:pre-wrap; }
+.advance { color:#efb296; background:none; border:0; font-size:12px; font-weight:700; padding:7px 0 7px 10px; }
+.advance span { margin-left:12px; }
+.interaction { display:grid; gap:9px; margin-top:18px; }
+.interaction:empty { display:none; }
+.remembered-choice { border:1px dashed #ffffff45; background:#ffffff08; border-radius:3px; padding:12px 15px; }
+.remembered-choice p { margin:0 0 9px; color:#e8c4b4; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+.remembered-choice ul { list-style:none; margin:0; padding:0; display:grid; gap:6px; }
+.remembered-choice li { color:#c5c0c0; border-left:3px solid transparent; padding:4px 0 4px 10px; font-size:13px; line-height:1.5; overflow-wrap:anywhere; }
+.remembered-choice .remembered-selected { color:#fff2e7; border-left-color:#efad91; font-weight:700; }
+.policy-opening { border:1px solid #a6e2bd99; background:#173d36e8; border-radius:3px; padding:10px 13px; }
+.policy-opening-label { margin:0 0 5px; color:#b9e4c8; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+.policy-opening-text { margin:0; color:#f0faee; font-family:Georgia,serif; font-size:15px; line-height:1.45; overflow-wrap:anywhere; }
+.audit-comparison { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.audit-comparison > div { min-width:0; border:1px solid #ffffff45; border-radius:3px; background:#ffffff08; padding:12px 15px; }
+.audit-comparison p { margin:0; overflow-wrap:anywhere; }
+.audit-comparison .audit-comparison-label { margin-bottom:9px; color:#e8c4b4; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+.audit-comparison-annotation { color:#fff2e7; font-size:13px; line-height:1.5; white-space:pre-wrap; }
+.audit-comparison-claim { color:#eee5dc; font-size:12px; line-height:1.5; }
+.audit-comparison-seal { margin-top:10px !important; color:#b8e4bc; font-size:11px; font-weight:700; }
+@media (max-width:480px) { .audit-comparison { grid-template-columns:1fr; } }
+.ticket-comparison { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:8px 0 15px; }
+.ticket-side { min-width:0; border:1px solid #ffffff35; border-radius:3px; background:#ffffff09; padding:10px 13px; }
+.ticket-label { margin:0 0 9px; color:#e8c4b4; font-size:10px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; }
+.ticket-pieces,.ticket-lights { display:flex; align-items:center; gap:9px; min-height:36px; }
+.ticket-piece { display:block; flex:none; width:52px; height:27px; background:#e9b1a2; clip-path:polygon(0 0,100% 0,100% 34%,92% 50%,100% 66%,100% 100%,0 100%,0 66%,8% 50%,0 34%); border-radius:2px; box-shadow:inset 0 0 0 2px #703f4b; transform:rotate(-9deg); }
+.ticket-piece + .ticket-piece { background:#e7cfab; margin-left:-16px; transform:rotate(15deg); }
+.ticket-pieces.arranged .ticket-piece { flex:0 1 52px; min-width:0; margin-left:0; transform:none; }
+/* Forced colors can turn both pieces the same color as their panel. Keep
+   each physical piece visible, including their overlapping edges. */
+@media (forced-colors:active) {
+  .ticket-piece, .ticket-piece + .ticket-piece { background:CanvasText; border:2px solid Canvas; }
+}
+.ticket-light { width:27px; height:27px; display:grid; place-items:center; color:#d5fbe4; background:#245e47; border:1px solid #84ddb2; border-radius:3px; font-weight:700; }
+.ticket-light { position:relative; }
+.ticket-light-touch { flex:none; width:44px; height:44px; padding:0; cursor:pointer; font:inherit; font-weight:700; }
+.ticket-light-touch:focus-visible { outline:3px solid #fff5c8; outline-offset:3px; }
+/* Preserve the picture's touch target on narrow screens while letting the
+   two noninteractive lights shrink. Stack the panels on very narrow views. */
+@media (max-width:480px) { .ticket-lights { gap:4px; } }
+@media (max-width:319px) { .ticket-comparison { grid-template-columns:1fr; } }
+.ticket-fingerprint { position:absolute; width:19px; height:25px; left:9px; top:-11px; border:2px solid #f5f2c9b8; border-radius:48% 48% 43% 43%; transform:rotate(24deg); pointer-events:none; box-shadow:inset 0 0 0 2px #245e47, inset 0 0 0 4px #f5f2c9a8, 0 0 3px #f9f5cd; }
+.ticket-signal { position:absolute; width:25px; height:25px; left:15px; top:-17px; pointer-events:none; filter:drop-shadow(0 1px 2px #061d17); }
+.ticket-signal-ribbon { width:39px; height:39px; left:-6px; top:-6px; }
+.ticket-light-touch .ticket-signal { left:19px; top:0; }
+.ticket-light-touch .ticket-signal-ribbon { left:2px; top:2px; }
+.ticket-signal-arriving.ticket-signal-star { animation:ticket-star 1s ease-out both; }
+.ticket-signal-arriving.ticket-signal-bell { animation:ticket-bell .65s ease-out both; transform-origin:50% 15%; }
+.ticket-signal-arriving.ticket-signal-ribbon { animation:ticket-ribbon .9s ease-out both; transform-origin:50% 50%; }
+@keyframes ticket-star { from { transform:translateX(-18px); } to { transform:translateX(0); } }
+@keyframes ticket-bell { 0% { transform:rotate(-12deg); } 40% { transform:rotate(10deg); } 75% { transform:rotate(-5deg); } 100% { transform:rotate(0); } }
+@keyframes ticket-ribbon { from { transform:rotate(-32deg) scale(.8); } to { transform:rotate(0) scale(1); } }
+@media (prefers-reduced-motion:reduce) { .ticket-signal-arriving { animation:none !important; } }
+.ticket-caption { margin:7px 0 0; color:#d9d3ce; font-size:11px; }
+.ticket-screen { background:#17352ee6; border-color:#7dc69a70; }
+.ticket-badge { display:inline-block; max-width:100%; margin:9px 0 0; padding:4px 8px; border:1px solid #d9af8d; border-radius:999px; background:#f6dbc6; color:#473044; font-size:10px; font-weight:800; line-height:1.3; letter-spacing:.03em; overflow-wrap:anywhere; }
+.choice { text-align:left; color:#eee5dc; background:#ffffff0b; border:1px solid #ffffff2c; padding:13px 15px; border-radius:3px; font-size:13px; }
+.choice:hover { background:#edaa8c20; border-color:#edaa8c; }
+.choice.system-confirm { color:#e8fff2; background:#236745; border-color:#7de7a8; font-weight:700; }
+.choice.system-confirm:hover { background:#318455; border-color:#b9ffd5; }
+.contact-link { text-decoration:none; }
+.contact-address { margin:0; overflow-wrap:anywhere; }
+.input-label { font-size:12px; color:#e3b6a4; line-height:1.5; }
+textarea { resize:vertical; min-height:78px; background:#10121d; border:1px solid #ffffff45; color:#fff; border-radius:3px; padding:12px; width:100%; }
+.input-submit { justify-self:start; }
+.footer { min-height:calc(48px + env(safe-area-inset-bottom, 0px)); display:flex; align-items:center; justify-content:space-between; gap:15px; padding:0 clamp(22px,5vw,80px) env(safe-area-inset-bottom, 0px); font-size:9px; color:#9e9ca1; letter-spacing:.15em; font-weight:700; background:#171925; }
+.footer-star { color:#edaa8c; padding-left:10px; }
+dialog { max-height:90vh; max-height:min(90vh, calc(100vh - 24px - max(env(safe-area-inset-top, 0px), env(safe-area-inset-bottom, 0px)) - max(env(safe-area-inset-top, 0px), env(safe-area-inset-bottom, 0px)))); overflow-y:auto; width:min(92vw,540px); max-width:calc(100vw - 24px - max(env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)) - max(env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px))); background:#222330; color:#f4eee5; border:1px solid #ffffff30; border-radius:5px; padding:28px; box-shadow:0 20px 80px #000a; }
+dialog::backdrop { background:#080910bb; }
+/* Keep native dialogs in the viewport when an on-screen keyboard and device
+   rotation change the page's scroll position, including older WebViews. */
+dialog:not(.fallback-dialog) { position:fixed; top:0; bottom:0; margin:auto; }
+/* Older WebKit does not implement dialog.showModal(). */
+dialog.fallback-dialog:not([hidden]) { display:block; position:fixed; z-index:1000; top:50%; left:50%; transform:translate(-50%, -50%); margin:0; box-shadow:0 0 0 100vmax #080910bb,0 20px 80px #000a; }
+.app.settings-inert { pointer-events:none; }
+.modal-head { display:flex; align-items:start; justify-content:space-between; }
+.modal-head h2 { font-size:32px; margin:8px 0 12px; }
+.modal-head .eyebrow { margin:0; }
+.icon-button { background:none; border:0; font-size:28px; color:#eee; min-width:44px; min-height:44px; }
+dialog p { font-size:13px; color:#d4ceca; line-height:1.55; }
+dialog label { display:block; margin:15px 0 6px; font-size:11px; font-weight:700; }
+dialog input, dialog select { width:100%; background:#11131d; border:1px solid #ffffff40; color:#fff; border-radius:3px; padding:11px; }
+.optional { color:#aaa; font-weight:400; }
+dialog .privacy { font-size:11px; color:#aaa7aa; }
+.modal-actions { display:flex; justify-content:flex-end; gap:10px; margin-top:20px; }
+.secondary { color:#eee; background:transparent; border:1px solid #ffffff40; padding:12px 18px; border-radius:3px; }
+@media (max-width:600px) { .portrait { right:-8%; max-width:90%; height:65%; } .topbar { height:65px; } .station { font-size:10px; } .station small { font-size:7px; } .text-button { font-size:11px; } .stage { min-height:calc(100svh - 109px); } .intro { padding-top:15vh; } .scene-label { font-size:9px; } .dialogue { padding:20px; } .footer { font-size:8px; min-height:44px; letter-spacing:.08em; } }
+
+.advanced { margin-top:16px; font-size:12px; color:#d4ceca; }
+.advanced summary { cursor:pointer; color:#efb296; font-weight:700; }
+
+.service-settings { border:1px solid #ffffff24; border-radius:4px; padding:14px; margin:18px 0; }
+.service-settings legend { color:#efb296; font-size:12px; font-weight:700; padding:0 5px; }
+.service-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+dialog h3 { font-size:13px; color:#efb296; margin:20px 0 0; }
+/* The fort image is cropped more tightly on portrait tablets as well as phones. */
+@media (max-aspect-ratio:4/3) {
+  .stage[data-shadow-echo="yes"] .backdrop { background-position:15% center; }
+  .stage[data-shadow-echo="yes"] .backdrop::before {
+    -webkit-mask-image:radial-gradient(ellipse 48% 38% at 38% 25%, #000 38%, transparent 92%);
+    mask-image:radial-gradient(ellipse 48% 38% at 38% 25%, #000 38%, transparent 92%);
+  }
+}
+/* Small screens and touch: allow the header and dialog to grow instead of clipping. */
+@media (max-width:600px) {
+  /* Keep the ending shadow on the hanging sheet in the phone crop. */
+  .stage[data-shadow-echo="yes"] .backdrop { background-position:15% center; }
+  .stage[data-shadow-echo="yes"] .backdrop::before {
+    -webkit-mask-image:radial-gradient(ellipse 62% 35% at 48% 25%, #000 38%, transparent 92%);
+    mask-image:radial-gradient(ellipse 62% 35% at 48% 25%, #000 38%, transparent 92%);
+  }
+  /* Once the lights go out, a centered phone crop shows only wallpaper.
+     Reveal the corridor instead; the lit room retains its warm center. */
+  .stage[data-location="playroom"][data-playroom-light="dim"] .backdrop { background-position:78% center; }
+  /* The scene header may scroll away on a phone. Keep one visual copy with
+     the dialogue while the original remains the sole accessible live status. */
+  .scene-info .machine-report { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+  .machine-report-mobile:not([hidden]) { display:block; max-width:none; width:fit-content; margin:0 0 15px; font-weight:700; }
+  .topbar { height:auto; min-height:calc(65px + env(safe-area-inset-top, 0px)); flex-wrap:wrap; padding-top:calc(10px + env(safe-area-inset-top, 0px)); padding-bottom:10px; }
+  .top-actions { flex-wrap:wrap; gap:4px 14px; }
+  .text-button, .advance, .choice { min-height:44px; }
+  .stage { min-height:calc(100vh - 109px); min-height:calc(100svh - 109px); }
+  /* Keep the speaking character above the dialogue rather than behind a tall
+     choice or reply panel. Narrator passages do not need the extra space. */
+  .portrait { top:60px; bottom:auto; right:4%; height:clamp(180px,30vh,240px); max-width:90%; }
+  .portrait:not([hidden]) + .dialogue { margin-top:clamp(180px,30vh,240px); }
+  dialog { max-height:90vh; padding:20px; }
+  dialog input, dialog select, textarea { font-size:16px; }
+  .dialogue-foot { gap:5px 12px; }
+  .footer { flex-wrap:wrap; min-height:calc(44px + env(safe-area-inset-bottom, 0px)); padding-top:10px; padding-bottom:calc(10px + env(safe-area-inset-bottom, 0px)); }
+}
+/* Older WebViews can parse min() but not dvh, invalidating the preceding
+   max-height at computed-value time. Only use dynamic units when supported. */
+@supports (height:100dvh) {
+  @media (max-width:600px) {
+    dialog { max-height:min(90dvh, calc(100dvh - 24px - max(env(safe-area-inset-top, 0px), env(safe-area-inset-bottom, 0px)) - max(env(safe-area-inset-top, 0px), env(safe-area-inset-bottom, 0px)))); }
+  }
+}
+/* Landscape phones have little vertical space. Placing the portrait above
+   the panel can push every new character line completely below the viewport;
+   let the text and portrait share the first screen when there is room. */
+@media (orientation:landscape) and (min-width:500px) and (max-width:1100px) and (max-height:500px) {
+  .stage { min-height:calc(100vh - 124px); }
+  .play { padding-top:16px; padding-bottom:16px; gap:18px; }
+  /* Model compatibility lives in a small-text disclosure, but phone controls
+     need readable text and a 16px font to avoid iOS focus zoom. */
+  dialog .advanced select { font-size:16px; }
+  .portrait { top:110px; bottom:auto; right:2%; height:clamp(130px, 48vh, 190px); max-width:30%; }
+  .portrait:not([hidden]) + .dialogue { align-self:flex-start; width:68%; margin-top:0; }
+}
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { scroll-behavior:auto !important; animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+}

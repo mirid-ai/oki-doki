@@ -1,0 +1,5 @@
+{
+  "windows": "https://github.com/mirid-ai/oki-doki/releases/download/v0.1.0-preview/oki-doki-windows-complete.zip",
+  "linux": "https://github.com/mirid-ai/oki-doki/releases/download/v0.1.0-preview/oki-doki-linux-complete.zip",
+  "source": "https://github.com/mirid-ai/oki-doki/releases/download/v0.1.0-preview/oki-doki-complete-source.zip"
+}

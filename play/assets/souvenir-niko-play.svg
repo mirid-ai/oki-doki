@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="245" viewBox="0 0 360 245">
+<rect width="360" height="245" rx="8" fill="#efe2cf"/>
+<path d="M9 11L351 8 347 236 11 234Z" fill="#f9f0df" stroke="#aa7f83" stroke-width="2"/>
+<path d="M16 18L344 15 341 229 19 227Z" fill="none" stroke="#d6b5a7" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+<path d="M70 224c8-39 49-51 110-52 61 1 102 13 110 52" fill="#b8bdc5" stroke="#694a59" stroke-width="4"/>
+<path d="M143 181v-19h74v19" fill="#e7c8b7" stroke="#694a59" stroke-width="3"/>
+<ellipse cx="180" cy="111" rx="58" ry="66" fill="#f5e9d7" stroke="#694a59" stroke-width="4"/>
+<!-- A small dessert-cup lid used as a crown, rather than a shaped crown. -->
+<g transform="rotate(-7 180 47)">
+<path d="M151 47v7c0 5 13 9 29 9s29-4 29-9v-7" fill="#d6a989" stroke="#694a59" stroke-width="3"/>
+<ellipse cx="180" cy="47" rx="29" ry="9" fill="#f3d6b9" stroke="#694a59" stroke-width="3"/>
+<text x="180" y="50" text-anchor="middle" font-family="Georgia,serif" font-size="7" font-weight="bold" fill="#684652">IMPORTANT</text>
+</g>
+<path d="M94 91l-16-7m20 20-17 3m180-16 16-7m-20 20 17 3" stroke="#bf8c8d" stroke-width="2" stroke-linecap="round"/>
+<path d="M23 23l8-3m297 4 7 3M24 220l7 3m298-2 8-2" stroke="#d6b5a7" stroke-linecap="round"/>
+</svg>
