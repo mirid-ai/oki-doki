@@ -6,7 +6,7 @@ Oki Doki began as a response to its creator's recollection of Aviva Sofia ASMR w
 
 ## Desktop preview
 
-Windows and Linux downloads are being prepared for the [preview release](https://github.com/mirid-ai/oki-doki/releases/tag/v0.1.0-preview). Extract the ZIP and run **Oki Doki.exe** on Windows or **Oki Doki** on Linux; each download includes instructions, prerecorded voices, local speech synthesis, music, effects, an optional local dialogue model and optional speech recognition.
+Windows and Linux downloads are available in the [preview release](https://github.com/mirid-ai/oki-doki/releases/tag/v0.1.0-preview). Extract the ZIP and run **Oki Doki.exe** on Windows or **Oki Doki** on Linux; each download includes instructions, prerecorded voices, local speech synthesis, music, effects, an optional local dialogue model and optional speech recognition.
 
 The Linux build was tested on Ubuntu 24.04 x64. An earlier Windows build was exercised under Wine; a full route in the current build remains unverified, and native Windows has not been tested. The Windows preview is unsigned. See [release notes](game/README.md#desktop-downloads) and the START-HERE file in each download for requirements and details.
 
