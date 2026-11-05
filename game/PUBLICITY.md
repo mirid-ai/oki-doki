@@ -26,11 +26,11 @@ Unofficial and unaffiliated with Team Salvato; Aviva Sofia ASMR is not involved 
 
 I started Oki Doki after hearing Aviva Sofia ASMR wish for another Doki Doki Literature Club: an open-source visual novel about friends, a prize hunt and an arcade that insists everything is fine. Unofficial, unaffiliated and not endorsed.
 
-[Add a public play link when available.]
+[Download the Windows and Linux preview](https://github.com/mirid-ai/oki-doki/releases/tag/v0.1.0-preview)
 
 ## Before sharing
 
-- The creator has registered **odlc.io** for Oki Doki’s future site. Add a public play or source link after the site is built and available; ownership of the domain does not establish that the game is hosted there yet. `python3 tools/package_web.py` prepares a static web archive for hosting; it does not publish the game.
+- The [desktop preview](https://github.com/mirid-ai/oki-doki/releases/tag/v0.1.0-preview) and [source repository](https://github.com/mirid-ai/oki-doki) are public. The site is deployed on GitHub Pages and the creator's domain **odlc.io** resolves to it over HTTP. At the last check its HTTPS certificate was still pending; confirm secure access and browser gameplay before using the domain as a public play link.
 - The creator has supplied **surelyitstimeyou@pm.me** for feedback; it also appears at the end of the game. The address can be included in a post if desired.
 - The prototype has been played in desktop browsers. Android packages have been built and earlier builds exercised on an Android emulator, but gameplay on a physical Android device and an iOS build remain unverified; do not advertise phone compatibility as established.
 - The package contains prerecorded Kokoro clips and a local speech model, tested in desktop Chrome and Linux Electron. Native Windows and phone playback are not yet verified. A publisher-supplied Chatterbox reference and its assigned speaker have not yet been configured.
