@@ -59,7 +59,6 @@ def build():
     if not managed(OUTPUT):
         raise ValueError(f'Refusing to replace an unmanaged output directory: {OUTPUT}')
     web = load_game_tool('package_web')
-    source = load_game_tool('package_source')
     with tempfile.TemporaryDirectory(prefix='.oki-site-stage-', dir=SITE) as temp:
         temp = Path(temp)
         candidate = temp / 'candidate'
@@ -75,10 +74,12 @@ def build():
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source_path, dest)
             count += 1
-        source.build(candidate / 'oki-doki-source.zip')
         with zipfile.ZipFile(candidate / 'website-source.zip', 'w', compression=zipfile.ZIP_DEFLATED) as archive:
             for name in SITE_SOURCES:
                 archive.write(SITE / name, 'website/' + name)
+        # The build already contains static files. Avoid Jekyll processing and
+        # keep the game-only archive (over GitHub's Git file limit) out of it.
+        (candidate / '.nojekyll').touch()
         (candidate / MARKER).touch()
         if not managed(OUTPUT):
             raise ValueError(f'Output changed during build: {OUTPUT}')
@@ -92,7 +93,7 @@ def build():
             if existed:
                 previous.rename(OUTPUT)
             raise
-    print(f'Built {OUTPUT} with {count} game web files and both source archives.')
+    print(f'Built {OUTPUT} with {count} game web files and the website source archive.')
 
 
 if __name__ == '__main__':
